@@ -1,0 +1,21 @@
+{
+  "name": "graphql-project-m1",
+  "version": "1.0.0",
+  "description": "graphql project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/index.js"
+  },
+  "type": "module",
+  "author": "Alpha KEITA",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.13.0",
+    "datetime": "^0.0.3",
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.8.0",
+    "prisma": "^4.13.0"
+  }
+}
