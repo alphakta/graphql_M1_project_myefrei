@@ -5,7 +5,8 @@ export default {
     getCourses: async () => {
         return await prisma.courses.findMany({
             include: {
-                teacher: true
+                courses_teacher: true,
+                grades: true
             }
         })
     },
