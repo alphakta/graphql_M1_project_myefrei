@@ -5,7 +5,8 @@ export default {
     getUsers: async () => {
         return await prisma.user.findMany({
             include: {
-                student: true
+                student: true,
+                teacher: true
             }
         })
     },
