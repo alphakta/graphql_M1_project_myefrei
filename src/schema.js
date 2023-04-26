@@ -62,9 +62,17 @@ type Course {
     id_user: Int
   }
 
+  input CourseInput {
+    module: String!
+    ue: String
+    type: String
+    coef: Float
+  }
+
     type Query {
         getUsers : [User]
-        getStudent: [Student]
+        getStudents: [Student]
+        getCourses: [Course]
     }
 
     type Mutation {
@@ -75,6 +83,10 @@ type Course {
         createStudent(value: StudentInput ) : Student
         updateStudent(id: Int, value: StudentInput) : Student
         deleteStudent(id: Int) : Student
+
+        createCourse(value: CourseInput ) : Course
+        updateCourse(id: Int, value: CourseInput) : Course
+        deleteCourse(id: Int) : Course
     }
 
 `)
