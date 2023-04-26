@@ -59,7 +59,7 @@ model user {
   first_name    String    @db.VarChar(45)
   last_name     String    @db.VarChar(45)
   gender        String?   @db.VarChar(45)
-  date_of_birth DateTime  @db.Date
+  date_of_birth String    @db.VarChar(10)
   student       student[]
   teacher       teacher[]
 }

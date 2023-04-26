@@ -7,8 +7,8 @@ type Courses {
   module: String!
   ue: String!
   coef: Float!
-  courses_teacher: [Courses_teacher!]!
-  grades: [Grades!]!
+  courses_teacher: [Courses_teacher]
+  grades: [Grades]
 }
 
 type Grades {
@@ -17,25 +17,25 @@ type Grades {
   id_courses: Int!
   id_student: Int!
   id_teacher: Int!
-  courses: Courses!
-  student: Student!
-  teacher: Teacher!
+  courses: Courses
+  student: Student
+  teacher: Teacher
 }
 
 type Student {
   id_student: Int!
   num_student: String
   id_user: Int!
-  grades: [Grades!]!
-  user: User!
+  grades: [Grades]
+  user: User
 }
 
 type Teacher {
   id_teacher: Int!
   id_user: Int!
-  courses_teacher: [Courses_teacher!]!
-  grades: [Grades!]!
-  user: User!
+  courses_teacher: [Courses_teacher]
+  grades: [Grades]
+  user: User
 }
 
 type User {
@@ -47,15 +47,15 @@ type User {
   last_name: String!
   gender: String
   date_of_birth: String!
-  student: [Student!]!
-  teacher: [Teacher!]!
+  student: [Student]
+  teacher: [Teacher]
 }
 
 type Courses_teacher {
   id_courses: Int!
   id_teacher: Int!
-  courses: Courses!
-  teacher: Teacher!
+  courses: Courses
+  teacher: Teacher
 }
 
 input UserInput {
@@ -76,19 +76,17 @@ input StudentInput {
 input CourseInput {
   module: String!
   ue: String
-  type: String
   coef: Float
 }
 
 input TeacherInput {
-  id_courses: Int
   id_user: Int
 }
 
 type Query {
   getUsers : [User]
   getStudents: [Student]
-  getCourses: [Course]
+  getCourses: [Courses]
   getTeachers: [Teacher]
 }
 
@@ -101,9 +99,9 @@ type Mutation {
   updateStudent(id: Int, value: StudentInput) : Student
   deleteStudent(id: Int) : Student
 
-  createCourse(value: CourseInput ) : Course
-  updateCourse(id: Int, value: CourseInput) : Course
-  deleteCourse(id: Int) : Course
+  createCourse(value: CourseInput ) : Courses
+  updateCourse(id: Int, value: CourseInput) : Courses
+  deleteCourse(id: Int) : Courses
 
   createTeacher(value: TeacherInput ) : Teacher
   updateTeacher(id: Int, value: TeacherInput) : Teacher
