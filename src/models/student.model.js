@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export default {
-    getStudent: async () => {
+    getStudents: async () => {
         return await prisma.student.findMany({
             include: {
                 user: true
