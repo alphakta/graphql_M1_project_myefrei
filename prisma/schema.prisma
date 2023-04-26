@@ -8,21 +8,20 @@ datasource db {
 }
 
 model courses {
-  id_courses Int       @id @unique(map: "id_courses_UNIQUE") @default(autoincrement())
-  module     String    @db.VarChar(45)
-  ue         String?   @db.VarChar(45)
-  type       String?   @db.VarChar(45)
-  coef       Float?    @db.Float
-  grades     grades[]
-  teacher    teacher[]
+  id_courses      Int               @id @unique(map: "id_courses_UNIQUE") @default(autoincrement())
+  module          String            @db.VarChar(45)
+  ue              String            @db.VarChar(45)
+  coef            Float             @db.Float
+  courses_teacher courses_teacher[]
+  grades          grades[]
 }
 
 model grades {
   id_grades  Int     @id @unique(map: "id_grades_UNIQUE") @default(autoincrement())
   note       Float   @db.Float
-  id_teacher Int
   id_courses Int
   id_student Int
+  id_teacher Int
   courses    courses @relation(fields: [id_courses], references: [id_courses], onDelete: NoAction, onUpdate: NoAction, map: "fk_Grades_Courses1")
   student    student @relation(fields: [id_student], references: [id_student], onDelete: NoAction, onUpdate: NoAction, map: "fk_Grades_Student1")
   teacher    teacher @relation(fields: [id_teacher], references: [id_teacher], onDelete: NoAction, onUpdate: NoAction, map: "fk_Grades_Teacher1")
@@ -34,23 +33,21 @@ model grades {
 
 model student {
   id_student  Int      @id @unique(map: "id_student_UNIQUE") @default(autoincrement())
-  id_user     Int
   num_student String?  @db.VarChar(45)
+  id_user     Int
   grades      grades[]
   user        user     @relation(fields: [id_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "fk_Student_User")
 
-  @@index([id_user], map: "fk_Student_User_idx")
+  @@index([id_user], map: "fk_Student_User1_idx")
 }
 
 model teacher {
-  id_teacher Int      @id @unique(map: "id_teacher_UNIQUE") @default(autoincrement())
-  id_user    Int
-  id_courses Int
-  grades     grades[]
-  courses    courses  @relation(fields: [id_courses], references: [id_courses], onDelete: NoAction, onUpdate: NoAction, map: "fk_Teacher_Courses1")
-  user       user     @relation(fields: [id_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "fk_Teacher_User1")
+  id_teacher      Int               @id @unique(map: "id_teacher_UNIQUE") @default(autoincrement())
+  id_user         Int
+  courses_teacher courses_teacher[]
+  grades          grades[]
+  user            user              @relation(fields: [id_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "fk_Teacher_User1")
 
-  @@index([id_courses], map: "fk_Teacher_Courses1_idx")
   @@index([id_user], map: "fk_Teacher_User1_idx")
 }
 
@@ -62,7 +59,18 @@ model user {
   first_name    String    @db.VarChar(45)
   last_name     String    @db.VarChar(45)
   gender        String?   @db.VarChar(45)
-  date_of_birth DateTime  @db.DateTime(0)
+  date_of_birth DateTime  @db.Date
   student       student[]
   teacher       teacher[]
+}
+
+model courses_teacher {
+  id_courses Int
+  id_teacher Int
+  courses    courses @relation(fields: [id_courses], references: [id_courses], onDelete: NoAction, onUpdate: NoAction, map: "fk_Courses_has_Teacher_Courses1")
+  teacher    teacher @relation(fields: [id_teacher], references: [id_teacher], onDelete: NoAction, onUpdate: NoAction, map: "fk_Courses_has_Teacher_Teacher1")
+
+  @@id([id_courses, id_teacher])
+  @@index([id_courses], map: "fk_Courses_has_Teacher_Courses1_idx")
+  @@index([id_teacher], map: "fk_Courses_has_Teacher_Teacher1_idx")
 }
