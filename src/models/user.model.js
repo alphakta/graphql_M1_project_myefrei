@@ -4,15 +4,15 @@ const prisma = new PrismaClient()
 export default {
     getUsers: async () => {
         return await prisma.user.findMany({
-            include: {
-                student: true,
-                teacher: true
-            }
+            include: { student: true, teacher: true }
         })
     },
     createUser: async ({ value }) => {
         console.log(value)
-        return await prisma.user.create({ data: value });
+        return await prisma.user.create({ 
+            data: value,
+            include: { student: true, teacher: true }
+        });
     },
     updateUser: async ({ id, value }) => {
         console.log(id)
@@ -22,7 +22,8 @@ export default {
             where: {
                 id_user: id
             },
-            data: value
+            data: value,
+            include: { student: true, teacher: true }
         })
 
     },
@@ -30,7 +31,8 @@ export default {
         return await prisma.user.delete({
             where: {
                 id_user: id
-            }
+            },
+            include: { student: true, teacher: true }
         })
     }
 }

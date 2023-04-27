@@ -4,47 +4,46 @@ const prisma = new PrismaClient()
 export default {
     getTeachers: async () => {
         return await prisma.teacher.findMany({
-            include: {
-                grades: true,
-                courses_teacher: true,
-                user: true
-            }
+            include: { user: true, grades: true, courses_teacher: true }
         })
     },
     createTeacher: async ({ value }) => {
-        const { id_user } = await prisma.user.findUnique({
-            where: {
-                id_user: value.id_user
-            },
-            select: {
-                id_user: true
-            }
-        });
+        const { id_user } = value;
 
-        if (id_user) return await prisma.teacher.create({ data: value }); 
-    
-        return false;
+        return await prisma.teacher.create({ 
+            data: {
+                user: {
+                    connect: {
+                        id_user: id_user
+                    }
+                }
+            },
+            include: { user: true, grades: true, courses_teacher: true }
+        }); 
     },
     updateTeacher: async ({ id, value }) => {
-        const { id_user } = await prisma.user.findUnique({
-            where: {
-                id_user: value.id_user
-            },
-            select: {
-                id_user: true
-            }
-        });
+        const { id_user } = value;
 
-        if (id_user) return await prisma.teacher.update({ where: { id_teacher: id }, data: value }); 
-
-        return false;
- 
+        return await prisma.teacher.update({ 
+            where: { 
+                id_teacher: id 
+            }, 
+            data: {
+                user: {
+                    connect: {
+                        id_user: id_user
+                    }
+                }
+            }, 
+            include: { user: true, grades: true, courses_teacher: true }
+        }); 
     },
     deleteTeacher: async ({ id }) => {
         return await prisma.teacher.delete({
             where: {
                 id_teacher: id
-            }
+            },
+            include: { user: true, grades: true, courses_teacher: true }
         })
     }
 }

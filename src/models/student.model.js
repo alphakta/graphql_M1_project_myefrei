@@ -11,38 +11,50 @@ export default {
         })
     },
     createStudent: async ({ value }) => {
-        const { id_user } = await prisma.user.findUnique({
-            where: {
-                id_user: value.id_user
+        const { num_student, id_user } = value;
+
+        return await prisma.student.create({
+            data: {
+                num_student: num_student,
+                user: {
+                    connect: {
+                        id_user: id_user
+                    }
+                }
             },
-            select: {
-                id_user: true
+            include: {
+                user: true
             }
         });
-
-        if (id_user) return await prisma.student.create({ data: value }); 
-    
-        return false;
     },
     updateStudent: async ({ id, value }) => {
-        const { id_user } = await prisma.user.findUnique({
+        const { num_student, id_user } = value;
+
+        return await prisma.student.update({
             where: {
-                id_user: value.id_user
+                id_student: id
             },
-            select: {
-                id_user: true
+            data: {
+                num_student: num_student,
+                user: {
+                    connect: {
+                        id_user: id_user
+                    }
+                }
+            },
+            include: {
+                user: true
             }
         });
 
-        if (id_user) return await prisma.student.update({ where: { id_student: id }, data: value }); 
-
-        return false;
- 
     },
     deleteStudent: async ({ id }) => {
         return await prisma.student.delete({
             where: {
                 id_student: id
+            },
+            include: {
+                user: true
             }
         })
     }
