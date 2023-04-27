@@ -5,6 +5,7 @@ import userController from './controlleurs/user.controller.js'
 import studentController from './controlleurs/student.controller.js'
 import courseController from './controlleurs/course.controller.js';
 import teacherController from './controlleurs/teacher.controller.js';
+import course_teacherController from './controlleurs/course_teacher.controller.js';
 
 const root = {
   // USER
@@ -30,7 +31,14 @@ const root = {
   createTeacher: (value) => teacherController.createTeacher(value),
   updateTeacher: (id, value) => teacherController.updateTeacher(id, value),
   deleteTeacher: (id) => teacherController.deleteTeacher(id),
-  // GRADE
+
+  // COURSE_TEACHER
+  getCourseTeacher: () => course_teacherController.getCourseTeacher(),
+  createCourseTeacher: (value) => course_teacherController.createCourseTeacher(value),
+  updateCourseTeacher: (id, value) => course_teacherController.updateCourseTeacher(id, value),
+  deleteCourseTeacher: (id) => course_teacherController.deleteCourseTeacher(id),
+
+  // GRADES
 }
 
 const app = express()

@@ -83,11 +83,17 @@ input TeacherInput {
   id_user: Int
 }
 
+input Courses_teacherInput {
+  id_courses: Int
+  id_teacher: Int
+}
+
 type Query {
   getUsers : [User]
   getStudents: [Student]
   getCourses: [Courses]
   getTeachers: [Teacher]
+  getCourseTeacher: [Courses_teacher]
 }
 
 type Mutation {
@@ -106,5 +112,9 @@ type Mutation {
   createTeacher(value: TeacherInput ) : Teacher
   updateTeacher(id: Int, value: TeacherInput) : Teacher
   deleteTeacher(id: Int) : Teacher
+
+  createCourseTeacher(value: Courses_teacherInput ) : Courses_teacher
+  updateCourseTeacher(id: Courses_teacherInput, value: Courses_teacherInput) : Courses_teacher
+  deleteCourseTeacher(id: Courses_teacherInput) : Courses_teacher
 }
 `)
