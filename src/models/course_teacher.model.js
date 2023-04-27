@@ -36,7 +36,7 @@ export default {
         });
     },
     deleteCourseTeacher: async ({ id }) => {
-        return await prisma.courses.delete({
+        return await prisma.courses_teacher.delete({
             where: {
                 id_courses_id_teacher: {
                     id_courses: id.id_courses,
