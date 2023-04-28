@@ -6,6 +6,7 @@ import studentController from './controlleurs/student.controller.js'
 import courseController from './controlleurs/course.controller.js';
 import teacherController from './controlleurs/teacher.controller.js';
 import course_teacherController from './controlleurs/course_teacher.controller.js';
+import gradesController from './controlleurs/grades.controller.js';
 
 const root = {
   // USER
@@ -39,6 +40,10 @@ const root = {
   deleteCourseTeacher: (id) => course_teacherController.deleteCourseTeacher(id),
 
   // GRADES
+  getGrades: () => gradesController.getGrades(),
+  createGrades: (value) => gradesController.createGrades(value),
+  updateGrades: (id, value) => gradesController.updateGrades(id, value),
+  deleteGrades: (id) => gradesController.deleteGrades(id),
 }
 
 const app = express()
