@@ -7,7 +7,13 @@ export default {
             include: { user: true, grades: true, courses_teacher: true }
         })
     },
-    createTeacher: async ({ value }) => {
+    getTeacherById: async (id) => {
+        return await prisma.teacher.findMany({
+            where: { id_teacher: id },
+            // include: { user: true, grades: true, courses_teacher: true }
+        })    
+    },
+    createTeacher: async (value) => {
         const { id_user } = value;
 
         return await prisma.teacher.create({ 
@@ -21,7 +27,7 @@ export default {
             include: { user: true, grades: true, courses_teacher: true }
         }); 
     },
-    updateTeacher: async ({ id, value }) => {
+    updateTeacher: async (id, value) => {
         const { id_user } = value;
 
         return await prisma.teacher.update({ 
@@ -38,7 +44,7 @@ export default {
             include: { user: true, grades: true, courses_teacher: true }
         }); 
     },
-    deleteTeacher: async ({ id }) => {
+    deleteTeacher: async (id) => {
         return await prisma.teacher.delete({
             where: {
                 id_teacher: id

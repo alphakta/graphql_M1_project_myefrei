@@ -7,17 +7,20 @@ export default {
             include: { student: true, teacher: true }
         })
     },
-    createUser: async ({ value }) => {
+    getUserById: async (id) => {
+        return await prisma.user.findUnique({
+            where: { id_user: id },
+            // include: { student: true, teacher: true }
+        })
+    },
+    createUser: async (value) => {
         console.log(value)
-        return await prisma.user.create({ 
+        return await prisma.user.create({
             data: value,
             include: { student: true, teacher: true }
         });
     },
-    updateUser: async ({ id, value }) => {
-        console.log(id)
-        console.log(value)
-
+    updateUser: async (id, value) => {
         return await prisma.user.update({
             where: {
                 id_user: id
@@ -25,9 +28,8 @@ export default {
             data: value,
             include: { student: true, teacher: true }
         })
-
     },
-    deleteUser: async ({ id }) => {
+    deleteUser: async (id) => {
         return await prisma.user.delete({
             where: {
                 id_user: id

@@ -97,11 +97,22 @@ input GradesInput {
 
 type Query {
   getUsers : [User]
+  getUserById(id: Int): User
+
   getStudents: [Student]
+  getStudentById(id: Int): Student
+
   getCourses: [Courses]
+  getCourseById(id: Int): Courses
+
   getTeachers: [Teacher]
+  getTeacherById(id: Int): Teacher
+
   getCourseTeacher: [Courses_teacher]
+  getCourseTeacherById(id: Int): Courses_teacher
+
   getGrades: [Grades]
+  getGradesById(id: Int): Grades
 }
 
 type Mutation {
