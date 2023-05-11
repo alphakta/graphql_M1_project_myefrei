@@ -1,12 +1,21 @@
+// Modules
 import express from 'express'
 import { graphqlHTTP } from 'express-graphql';
 import { schema } from './schema.js';
+import { unless } from 'express-unless';
+
+// Controlleurs
 import userController from './controlleurs/user.controller.js'
 import studentController from './controlleurs/student.controller.js'
 import courseController from './controlleurs/course.controller.js';
 import teacherController from './controlleurs/teacher.controller.js';
 import course_teacherController from './controlleurs/course_teacher.controller.js';
 import gradesController from './controlleurs/grades.controller.js';
+import authenticationController from './controlleurs/authentication.controller.js';
+
+// Middlewares
+import jwtMiddleware from './middlewares/jwt.middleware.js';
+
 
 const root = {
   // USER
@@ -52,16 +61,27 @@ const root = {
   deleteGrades: (id) => gradesController.deleteGrades(id),
 }
 
-const app = express()
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: true,
-  })
-)
+export const launch = ({ protocol, port, host }) => {
+  const app = express()
+  app.use(express.json());
 
-app.listen(4000, () => {
-  console.log("Running a GraphQL API server at http://localhost:4000/graphql")
-})
+  jwtMiddleware.unless = unless;
+  app.use(jwtMiddleware.unless({ path: ['/login'] }));
+  app.post('/login', authenticationController.loginUser);
+  app.use(
+    "/graphql",
+    graphqlHTTP({
+      schema: schema,
+      rootValue: root,
+      // I use Postman
+      graphiql: false,
+    })
+  )
+
+  app.listen(4000, () => {
+    console.log(`Running a Authentification API Server at ${protocol}://${host}:${port}/login`)
+    console.log(`Running a GraphQL API server at ${protocol}://${host}:${port}/graphql`)
+  })
+}
+
+
