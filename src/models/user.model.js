@@ -7,6 +7,15 @@ export default {
             include: { student: true, teacher: true }
         })
     },
+    findUser: async ({ email, password }, select) => {
+        return prisma.user.findFirst({
+            where: {
+                email,
+                password,
+            },
+            select,
+        });
+    },
     getUserById: async (id) => {
         return await prisma.user.findUnique({
             where: { id_user: id },
