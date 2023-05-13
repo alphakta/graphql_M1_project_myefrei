@@ -169,7 +169,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id_user` int NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `email` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `first_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `last_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
@@ -186,7 +186,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'John ddDoe','password123','johndoe@example.com','John','Doe','M','01/01/2001'),(2,'123','354','test@gmail.com','test first name','test last name','M','27/07/1990'),(3,'123','354','test@gmail.com','test first name','test last name','M','28/07/1999'),(5,'test','354','test@gmail.com','test first name','test last name','M','11/02/1998');
+INSERT INTO `user` VALUES (1,'JohnDoe','$2b$05$SrFUCqNDu9UTVRQgqw18AutpHSSPO0wLm5aewnykZPsRz2IaRlWha','johndoe@example.com','John','Doe','M','01/01/2001'),(2,'UsernameLambda','$2b$05$Sj82V4P87CVFFBvqNSJFa.9EfhbYWpNSdi6ZT/HhwyAaTAlLobbde','test2@gmail.com','test first name','test last name','M','27/07/1990'),(3,'user3','$2b$05$KSYxbuVpKiIZ7pY3lmqOVebiTE/4h9JpkG5Oqfcch.PoekCmJCKva','user3@example.com','test first name','test last name','M','28/07/1999'),(5,'test','$2b$05$C0hR7sB2p/JJe2.ByN/ezuvjgCg62zcxLrk4v7sBxUOgX4iM67rLi','test@example.com','test first name','test last name','M','11/02/1998');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -199,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-11 20:42:39
+-- Dump completed on 2023-05-13 16:00:45
