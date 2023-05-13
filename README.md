@@ -3,9 +3,10 @@ Projet : reproduction partiel du back end de la plateforme de My Efrei
 
 # Installation
 Pour installer l'application, commencez par cloner le dépôt depuis Github :
-
-# bash
+```bash
 git clone https://github.com/username/nom-de-l-application.git
+```
+
 Ensuite, installez les dépendances en utilisant npm :
 
 ```bash
