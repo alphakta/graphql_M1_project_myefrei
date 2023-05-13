@@ -7,11 +7,10 @@ export default {
             include: { student: true, teacher: true }
         })
     },
-    findUser: async ({ email, password }, select) => {
+    findUserByEmail: async ({ email }, select) => {
         return prisma.user.findFirst({
             where: {
-                email,
-                password,
+                email
             },
             select,
         });

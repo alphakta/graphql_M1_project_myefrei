@@ -1,4 +1,6 @@
 import userModel from '../models/user.model.js';
+import bcrypt from 'bcrypt';
+
 const ALLOWED_GENDERS = ['M', 'F'];
 
 const validateUser = (input) => {
@@ -30,16 +32,30 @@ const validateUser = (input) => {
 export default {
     getUsers: () => userModel.getUsers(),
     getUserById: ({id}) => userModel.getUserById(id),
-    createUser: ({value}) =>  {
+    createUser: async ({value}) =>  {
         validateUser(value)
+
+        // Hash password
+        const passwordHash = await bcrypt.hash(value.password, 5)
+        value.password = passwordHash
+
         userModel.createUser(value)
     },
     updateUser: async ({id, value}) =>{
       const user = await userModel.getUserById(id)
+      const passwordUpdated = value.password !== undefined
+
       if (!user) { throw new Error(`L'utilisateur avec l'id ${id} n'existe pas`) }
 
       const updatedUser = { ...user, ...value }
       validateUser(updatedUser)
+
+      // Hash password
+      if(passwordUpdated) {
+        const passwordHash = await bcrypt.hash(value.password, 5)
+        value.password = passwordHash
+      }
+
       userModel.updateUser(id, value)      
     },
     deleteUser: async ({id}) => {

@@ -65,15 +65,21 @@ export const launch = ({ protocol, port, host }) => {
   const app = express()
   app.use(express.json());
 
+  /*
+    * AUTHENTIFICATION
+    * Activer / décommenter ces 3 lignes ci-dessous pour activer l'authentification
+  */
   jwtMiddleware.unless = unless;
   app.use(jwtMiddleware.unless({ path: ['/login'] }));
   app.post('/login', authenticationController.loginUser);
+
   app.use(
     "/graphql",
     graphqlHTTP({
       schema: schema,
       rootValue: root,
-      // I use Postman
+      // J'utilisais Postman pour tester les requêtes GraphQL d'ou le graphiql: false 
+      // mais vous pouvez le mettre à true pour tester les requêtes GraphQL depuis votre navigateur après s'être authentifier
       graphiql: false,
     })
   )

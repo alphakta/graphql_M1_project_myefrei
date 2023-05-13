@@ -1,5 +1,7 @@
-import userModel from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+
+import userModel from '../models/user.model.js';
 
 const validateLoginUser = (email, password) => {
   if (!email || email === '') {
@@ -11,16 +13,22 @@ const validateLoginUser = (email, password) => {
 }
 
 export default {
-    loginUser: async (req, res, next) => {
-        const { email, password } = req.body;
+  loginUser: async (req, res, next) => {
+    const { email, password } = req.body;
+    validateLoginUser(email, password)
+    const user = await userModel.findUserByEmail({ email });
 
-        validateLoginUser(email, password)
-        const user = await userModel.findUser({ email, password });
-      
-        if (!user) { throw new Error('User not found') }
-        
+    if (!user) {
+      res.status(401).json({ message: 'User not found' });
+    } else {
+      const passwordMatch = await bcrypt.compare(password, user.password);
+
+      if (passwordMatch) {
         const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1800s' });
-        res.status(201).json({ user, token });
-        
+        res.status(200).json({ user, token });
+      } else {
+        res.status(401).json({ message: 'Wrong password' });
+      }
     }
+  }
 }
