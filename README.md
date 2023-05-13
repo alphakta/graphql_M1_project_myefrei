@@ -31,3 +31,9 @@ Pour lancer l'application, utilisez la commande suivante :
 ```bash
 npm run start
 ```
+
+Pour s'authentifier à l'API via la route /login, voici un utilisateur de test :
+```bash
+email: "johndoe@example.com"
+password: "test"
+```
